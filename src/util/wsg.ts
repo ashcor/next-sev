@@ -4,7 +4,7 @@ export class WsgService {
   
     async getToken(): Promise<string> {
       
-      const options = { revalidate: 10 };
+      const options = { revalidate: 3600 };
   
       return cache(this.fetchToken, ['auth-token'], options)()
         .catch((error: unknown) => {
