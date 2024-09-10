@@ -1,8 +1,18 @@
+import cache from "./cache";
 import { WsgService } from "./wsg";
 
 export class ProductService {
 
     readonly wsgService = new WsgService();
+
+
+    async getProductsCached(category: string): Promise<string[]> {
+        const options = { tags: [category] };
+        return cache(this.getProducts, ['prodcut-v1'], options)(category)
+            .catch((error: unknown) => {
+                throw new Error("Error", { cause: error });
+            });
+    }
 
     async getProducts(category: string): Promise<string[]> {
 
