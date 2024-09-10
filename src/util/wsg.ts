@@ -1,10 +1,13 @@
+import { toSeconds } from "duration-fns/dist/toUnit";
 import cache from "./cache";
+
+const TTL_LESS_THAN_ONE_HOUR = toSeconds({ minutes: 59 });
 
 export class WsgService {
 
     async getToken(): Promise<string> {
 
-        const options = { revalidate: 3600 };
+        const options = { revalidate: TTL_LESS_THAN_ONE_HOUR };
 
         return cache(this.fetchNewToken, ['wsg-token-1'], options)()
             .catch((error: unknown) => {
