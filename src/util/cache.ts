@@ -16,7 +16,6 @@ const cache = <T, P extends unknown[]>(callback: Callback<T, P>, keys: Keys, opt
     if (options.disableCache) return callback(...params);
     const serialized = async (params: P): Promise<string> => {
         const res = callback(...params).then(stringify);
-        res.then((r) => console.log('r', r));
         return res;
     }
     
