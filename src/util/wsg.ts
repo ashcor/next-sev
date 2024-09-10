@@ -8,7 +8,7 @@ export class WsgService {
     async getToken(): Promise<string> {
 
         const options = { revalidate: TTL_LESS_THAN_ONE_HOUR };
-
+        console.log(`Get token from cache with options: ${JSON.stringify(options)}`);
         return cache(this.fetchNewToken, ['wsg-token-1'], options)()
             .catch((error: unknown) => {
                 throw new Error("Error", { cause: error });
