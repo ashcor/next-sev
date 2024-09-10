@@ -5,8 +5,16 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const service = new ProductService();
 
-  const id = await service.getProducts(params.id)
+  const products = await service.getProducts(params.id)
   return <div>
-    <h1>Hi {id}</h1>
+    <h1>{params.id}</h1>
+    <ul>
+      {products.map((product) => <li key={product}>{product}</li>)}
+    </ul>
+    <p>
+      <small>
+        Generated at {new Date().toISOString()}
+      </small>
+    </p>
   </div>;
 }
