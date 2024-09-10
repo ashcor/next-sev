@@ -5,7 +5,6 @@ export class ProductService {
 
     readonly wsgService = new WsgService();
 
-
     async getProductsCached(category: string): Promise<string[]> {
         const options = { tags: [category] };
         return cache(this.getProducts, ['prodcut-v1'], options)(category)
