@@ -6,7 +6,7 @@ export class WsgService {
 
         const options = { revalidate: 3600 };
 
-        return cache(this.fetchNewToken, ['auth-token-2'], options)()
+        return cache(this.fetchNewToken, ['wsg-token-1'], options)()
             .catch((error: unknown) => {
                 throw new Error("Error", { cause: error });
             });
