@@ -5,7 +5,7 @@ export class WsgService {
     async getToken(): Promise<string> {
 
         const options = {revalidate: 360};
-        return cache(this.fetchNewToken, ['wsg-token-1'], options)()
+        return cache(this.fetchNewToken, ['wsg-token-v2'], options)()
             .catch((error: unknown) => {
                 throw new Error("Error", {cause: error});
             });

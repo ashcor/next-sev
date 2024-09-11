@@ -6,9 +6,9 @@ export class ProductService {
     private readonly wsgService = new WsgService();
 
     async getProductsCached(category: string): Promise<string[]> {
-        const options = {tags: [category], revalidate: 60};
+        const options = {tags: [category], revalidate: 360};
         const token = await this.wsgService.getToken();
-        return cache((cat: string) => this.getProducts(cat, token), ['products-v1'], options)(category)
+        return cache((cat: string) => this.getProducts(cat, token), ['products-v2'], options)(category)
             .catch((error: unknown) => {
                 throw new Error("Error", {cause: error});
             });
