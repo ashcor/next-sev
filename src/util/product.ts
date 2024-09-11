@@ -7,20 +7,20 @@ export class ProductService {
 
     async getProductsCached(category: string): Promise<string[]> {
         const options = {tags: [category], revalidate: 60};
-        return cache(this.getProductsFn, ['products-v1'], options)(category)
+        const token = await this.wsgService.getToken();
+        return cache(this.getProductsFn, ['products-v1'], options)(category, token)
             .catch((error: unknown) => {
                 throw new Error("Error", {cause: error});
             });
     }
 
-    private getProductsFn = async (category: string) => {
-        return this.getProducts(category);
+    private getProductsFn = async (category: string, token: string) => {
+        return this.getProducts(category, token);
     }
 
-    async getProducts(category: string): Promise<string[]> {
+    async getProducts(category: string, token: string): Promise<string[]> {
 
         console.log(`Fetch new products for category ${category}.`);
-        const token = await this.wsgService.getToken();
         const headers = {
             "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
