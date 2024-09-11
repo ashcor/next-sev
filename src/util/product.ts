@@ -3,22 +3,26 @@ import {WsgService} from "./wsg";
 
 export class ProductService {
 
-    readonly wsgService = new WsgService();
+    private readonly wsgService = new WsgService();
 
     async getProductsCached(category: string): Promise<string[]> {
-        const options = {tags: [category]};
-        return cache(this.getProducts, ['prodcut-v1'], options)(category)
+        const options = {tags: [category], revalidate: 360};
+        return cache(this.getProductsFn, ['products-v1'], options)(category)
             .catch((error: unknown) => {
                 throw new Error("Error", {cause: error});
             });
     }
 
+    private getProductsFn = async (category: string) => {
+        return this.getProducts(category);
+    }
+
     async getProducts(category: string): Promise<string[]> {
 
         console.log(`Fetch new products for category ${category}.`);
-
+        const token = await this.wsgService.getToken();
         const headers = {
-            "Authorization": `Bearer ${await this.wsgService.getToken()}`,
+            "Authorization": `Bearer ${token}`,
             "Content-Type": "application/json",
             "x-airup-app": "product",
         };
