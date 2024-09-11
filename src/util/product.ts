@@ -8,14 +8,10 @@ export class ProductService {
     async getProductsCached(category: string): Promise<string[]> {
         const options = {tags: [category], revalidate: 60};
         const token = await this.wsgService.getToken();
-        return cache((category: string) => this.getProductsFn(token, category), ['products-v1'], options)(category)
+        return cache((cat: string) => this.getProducts(cat, token), ['products-v1'], options)(category)
             .catch((error: unknown) => {
                 throw new Error("Error", {cause: error});
             });
-    }
-
-    private getProductsFn = async (token: string, category: string) => {
-        return this.getProducts(category, token);
     }
 
     async getProducts(category: string, token: string): Promise<string[]> {
