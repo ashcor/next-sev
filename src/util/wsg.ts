@@ -2,13 +2,17 @@ import cache from "./cache";
 
 export class WsgService {
 
-    async getToken(): Promise<string> {
+    // async getToken(): Promise<string> {
+    //
+    //     const options = {revalidate: 360};
+    //     return cache(this.fetchNewToken, ['wsg-token-v2'], options)()
+    //         .catch((error: unknown) => {
+    //             throw new Error("Error", {cause: error});
+    //         });
+    // }
 
-        const options = {revalidate: 360};
-        return cache(this.fetchNewToken, ['wsg-token-v2'], options)()
-            .catch((error: unknown) => {
-                throw new Error("Error", {cause: error});
-            });
+    async getToken(): Promise<string> {
+        return this.fetchNewToken()
     }
 
     private fetchNewToken = async () => {
@@ -24,7 +28,8 @@ export class WsgService {
         const response = await fetch(`${base}/oauth2/token`, {
             headers,
             body,
-            method: 'POST'
+            method: 'POST',
+            next: {revalidate: 360, tags: ['wsg-token']}
         });
 
         if (!response.ok) {

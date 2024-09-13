@@ -5,7 +5,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   const service = new ProductService();
 
-  const products = await service.getProductsCached(params.id)
+  const products = await service.getProducts(params.id)
   return <div>
     <h1>{params.id}</h1>
     <ul>
