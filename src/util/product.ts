@@ -1,4 +1,3 @@
-import cache from "./cache";
 import {WsgService} from "./wsg";
 
 export class ProductService {

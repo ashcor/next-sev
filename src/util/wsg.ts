@@ -1,4 +1,3 @@
-import cache from "./cache";
 
 export class WsgService {
 
