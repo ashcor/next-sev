@@ -28,7 +28,7 @@ export class WsgService {
             headers,
             body,
             method: 'POST',
-            next: {revalidate: 360, tags: ['wsg-token']}
+            next: {revalidate: 360, tags: ['wsg-token', 'all']}
         });
 
         if (!response.ok) {

@@ -25,7 +25,7 @@ export class ProductService {
         const response = await fetch(`${base}/v3/products/categories/${category}?region=dev1`, {
             headers,
             method: 'GET',
-            next: { revalidate: 360, tags: [`category-${category}`] }
+            next: { revalidate: 360, tags: [`category-${category}`, 'all'] }
         });
         if (!response.ok) {
             const responseBody = await response.text();
