@@ -45,7 +45,7 @@ const nextConfig = {
             // },
             {
                 source: "/:country([a-z]{2})/legacy/kola",
-                destination: "/:country/shop/flavors/kola",
+                destination: "/shop/:country/flavors/kola",
                 permanent: true,
             },
             // {
