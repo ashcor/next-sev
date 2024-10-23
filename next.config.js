@@ -20,12 +20,12 @@ const nextConfig = {
             },
             {
                 source: "/at/legacy/:slug*",
-                destination: "/at",
+                destination: "/shop/at",
                 permanent: true,
             },
             {
                 source: "/de/legacy/:slug*",
-                destination: "/de",
+                destination: "/shop/de",
                 permanent: true,
             },
         ];
