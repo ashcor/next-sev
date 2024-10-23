@@ -14,13 +14,18 @@ const nextConfig = {
     async redirects() {
         return [
             {
-                source: "/:country/legacy/kola",
+                source: "/:country([a-z]{2})/legacy/kola",
                 destination: "/shop/:country/flavors/kola",
                 permanent: true,
             },
             {
-                source: "/:country/legacy/:slug*",
-                destination: "/:country",
+                source: "/at/legacy/:slug*",
+                destination: "/at",
+                permanent: true,
+            },
+            {
+                source: "/de/legacy/:slug*",
+                destination: "/de",
                 permanent: true,
             },
         ];
