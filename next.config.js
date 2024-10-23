@@ -36,7 +36,31 @@ const nextConfig = {
             ...legacyCatchAllRedirects("/:country([a-z]{2})", "/:country"),
         ];
 
-        return redirects;
+        // same as redirects but just hardcode the values
+        const redirects2 = [
+            // {
+            //     source: "/legacy/kola",
+            //     destination: "/shop/flavors/kola",
+            //     permanent: true,
+            // },
+            {
+                source: "/:country([a-z]{2})/legacy/kola",
+                destination: "/:country/shop/flavors/kola",
+                permanent: true,
+            },
+            // {
+            //     source: "/legacy/:slug*",
+            //     destination: "/",
+            //     permanent: true,
+            // },
+            {
+                source: "/:country([a-z]{2})/legacy/:slug*",
+                destination: "/:country",
+                permanent: true,
+            },
+        ];
+
+        return redirects2;
     },
 }
 
