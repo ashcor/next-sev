@@ -1,13 +1,15 @@
 import { ProductService } from "@/util/product";
 
+type Params = Promise<{ id: string }>;
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: Params }) {
 
+  const { id } = await params;
   const service = new ProductService();
 
-  const products = await service.getProducts(params.id)
+  const products = await service.getProducts(id)
   return <div>
-    <h1>{params.id}</h1>
+    <h1>{id}</h1>
     <ul>
       {products.map((product) => <li key={product}>{product}</li>)}
     </ul>

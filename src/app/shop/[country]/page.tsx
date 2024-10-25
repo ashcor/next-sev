@@ -1,17 +1,19 @@
-import { Metadata } from "next";
+import {Metadata} from "next";
 
-export const generateMetadata = async ({ params }: { params: { country: string } }) => {
-  const { country } = params;
-  const localizedAirUp = `air up® ${country}`;
-  return {
-    title: localizedAirUp,
-  } satisfies Metadata;
+type Params = Promise<{ country: string }>;
+
+export const generateMetadata = async ({params}: { params: Params }) => {
+    const {country} = await params;
+    const localizedAirUp = `air up® ${country}`;
+    return {
+        title: localizedAirUp,
+    } satisfies Metadata;
 };
 
-export default async function Page({ params }: { params: { country: string } }) {
+export default async function Page({params}: { params: Params }) {
 
-    const country = params.country;
+    const {country} = await params;
     return <div>
-      <h1>{country} Shop</h1>    
+        <h1>{country} Shop</h1>
     </div>;
-  }
+}
