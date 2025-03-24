@@ -9,15 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "next": "15.2.2",
+    "next": "15.2.3",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "superjson": "2.2.2"
   },
   "devDependencies": {
-    "@types/node": "22.13.10",
-    "@types/react": "19.0.10",
-    "eslint-config-next": "15.2.2",
+    "@types/node": "22.13.12",
+    "@types/react": "19.0.12",
+    "eslint-config-next": "15.2.3",
     "typescript": "5.8.2"
   }
 }
