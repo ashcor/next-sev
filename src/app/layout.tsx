@@ -1,6 +1,8 @@
 import './global.css';
+import { RudderstackProvider } from '@/components/RudderstackProvider';
+import type { Metadata } from 'next';
 
-export const metadata = {
+export const metadata: Metadata = {
   title: 'next sev',
   description: 'just for fun',
 }
@@ -13,11 +15,13 @@ export default function RootLayout({
   return (
     <html>
       <head>
-      </head>
+          <title>next-sev</title></head>
       <body>
-        <div>
-          {children}
-        </div>
+        <RudderstackProvider>
+          <div>
+            {children}
+          </div>
+        </RudderstackProvider>
       </body>
     </html>
   )
