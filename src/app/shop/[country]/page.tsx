@@ -14,6 +14,6 @@ export default async function Page({params}: { params: Params }) {
 
     const {country} = await params;
     return <div>
-        <h1>{country} Shop</h1>
+        <h1>{country.toUpperCase()} Shop</h1>
     </div>;
 }
