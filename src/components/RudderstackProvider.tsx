@@ -50,8 +50,18 @@ export function RudderstackProvider({ children }: RudderstackProviderProps) {
 
                 // Load Rudderstack with preConsent configuration
                 rudderAnalytics.load(writeKey, dataPlaneUrl, {
+                    consentManagement: {
+                        enabled: true,
+                        provider: "custom"
+                    },
                     preConsent: {
                         enabled: true,
+                        storage: {
+                            strategy: "anonymousId",
+                        },
+                        events: {
+                            delivery: "buffer",
+                        },
                     },
                 });
 
@@ -66,7 +76,15 @@ export function RudderstackProvider({ children }: RudderstackProviderProps) {
 
     const giveConsent = () => {
         if (analytics) {
-            analytics.consent();
+            analytics.consent({
+                    consentManagement: {
+                        enabled: true,
+                        provider: "custom",
+                        allowedConsentIds: ["BRAZE", "RUDDERSTACK"],
+                        deniedConsentIds: [],
+                    },
+                }
+            );
             setHasConsent(true);
             console.log('Consent given - Rudderstack tracking enabled');
         }
