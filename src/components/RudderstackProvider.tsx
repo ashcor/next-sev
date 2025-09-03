@@ -9,25 +9,32 @@ interface RudderstackProviderProps {
     children: React.ReactNode;
 }
 
-export const RudderstackContext = createContext<Maybe<RudderAnalytics>>(undefined);
+interface ConsentContextType {
+    analyticsService: Maybe<RudderAnalytics>;
+    hasConsent: boolean;
+    giveConsent: () => void;
+}
+
+export const RudderstackContext = createContext<Maybe<ConsentContextType>>(undefined);
 
 export const useRudderstack = () => {
-    const analyticsService = useContext(RudderstackContext);
+    const context = useContext(RudderstackContext);
     const [isClient, setIsClient] = useState(false);
 
     useEffect(() => {
         setIsClient(true);
     }, []);
 
-    if (isClient && !analyticsService) {
+    if (isClient && !context) {
         console.warn("Rudderstack analytics not available. Check your configuration.");
     }
 
-    return { analyticsService };
+    return context;
 };
 
 export function RudderstackProvider({ children }: RudderstackProviderProps) {
     const [analytics, setAnalytics] = useState<RudderAnalytics | undefined>(undefined);
+    const [hasConsent, setHasConsent] = useState(false);
 
     useEffect(() => {
         if (!analytics) {
@@ -36,10 +43,17 @@ export function RudderstackProvider({ children }: RudderstackProviderProps) {
 
             if (writeKey && dataPlaneUrl) {
                 const rudderAnalytics = new RudderAnalytics();
+
                 rudderAnalytics.ready(() => {
                     console.log('Rudderstack is ready');
                 });
-                rudderAnalytics.load(writeKey, dataPlaneUrl);
+
+                // Load Rudderstack with preConsent configuration
+                rudderAnalytics.load(writeKey, dataPlaneUrl, {
+                    preConsent: {
+                        enabled: true,
+                    },
+                });
 
                 setAnalytics(rudderAnalytics);
             } else {
@@ -50,8 +64,22 @@ export function RudderstackProvider({ children }: RudderstackProviderProps) {
         }
     }, [analytics]);
 
+    const giveConsent = () => {
+        if (analytics) {
+            analytics.consent();
+            setHasConsent(true);
+            console.log('Consent given - Rudderstack tracking enabled');
+        }
+    };
+
+    const contextValue: ConsentContextType = {
+        analyticsService: analytics,
+        hasConsent,
+        giveConsent,
+    };
+
     return (
-        <RudderstackContext.Provider value={analytics}>
+        <RudderstackContext.Provider value={contextValue}>
             {children}
         </RudderstackContext.Provider>
     );

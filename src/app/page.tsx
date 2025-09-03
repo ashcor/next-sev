@@ -1,4 +1,4 @@
-import { SampleAnalytics } from '@/components/SampleAnalytics';
+import SampleAnalytics from '@/components/SampleAnalytics';
 
 export default async function Page() {
   console.log("Page");
