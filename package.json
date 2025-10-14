@@ -10,14 +10,14 @@
   },
   "dependencies": {
     "@rudderstack/analytics-js": "3.24.2",
-    "next": "15.5.4",
+    "next": "15.5.5",
     "react": "19.2.0",
     "react-dom": "19.2.0"
   },
   "devDependencies": {
     "@types/node": "24.7.2",
     "@types/react": "19.2.2",
-    "eslint-config-next": "15.5.4",
+    "eslint-config-next": "15.5.5",
     "typescript": "5.9.3"
   }
 }
